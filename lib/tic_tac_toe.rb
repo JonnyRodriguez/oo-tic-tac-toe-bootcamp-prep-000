@@ -20,68 +20,61 @@ class TicTacToe
     @board[index]=player
   end
 
-def position_taken?(board, index)
-  !(board[index].nil? || board[index] == " ")
-end
+  def position_taken?(index)
+    !(@board[index].nil? || @board[index] == " ")
+  end
 
-def valid_move?(board,index)
-  !position_taken?(board,index) if index.between?(0,8)
-end
+  def valid_move?(index)
+    !position_taken?(@board,index) if index.between?(0,8)
+  end
 
-def turn(board)
-  loop do
-    puts "Please enter 1-9:"
-    index=input_to_index(gets.strip)
-    if valid_move?(board,index)
-      move(board,index,current_player(board))
-      display_board(board)
-      break
+  def turn(board)
+    loop do
+      puts "Please enter 1-9:"
+      index=input_to_index(gets.strip)
+      if valid_move?(index)
+        move(index,current_player(board))
+        display_board(board)
+        break
+      end
     end
   end
-end
 
-def turn_count(board)
-  board.count { |content| content=="X" || content=="O" }
-end
-
-def current_player(board)
-  turn_count(board).even? ? "X" : "O"
-end
-
-def won?(board)
-  WIN_COMBINATIONS.each do |combination|
-    return combination if combination.all? {|i| board[i]=="X"}
-    return combination if combination.all? {|i| board[i]=="O"}
+  def turn_count
+    @board.count { |content| content=="X" || content=="O" }
   end
-  false
-end
 
-def full?(board)
-  board.none? {|c| c==" "}
-end
-
-def draw?(board)
-  full?(board) && !won?(board)
-end
-
-def over?(board)
-  won?(board) || draw?(board)
-end
-
-def winner(board)
-  won=won?(board)
-  return board[won[0]] if won
-end
-
-def play(board)
-  turn(board) until over?(board)
-  puts won?(board) ? "Congratulations #{winner(board)}!" : "Cat's Game!"
-end
-
-def winner(board)
-  won=won?(board)
-  if won
-    return board[won[0]]
+  def current_player
+    turn_count.even? ? "X" : "O"
   end
-  return nil
+
+  def won?
+    @WIN_COMBINATIONS.each do |combination|
+      return combination if combination.all? {|i| @board[i]=="X"}
+      return combination if combination.all? {|i| @board[i]=="O"}
+    end
+    false
+  end
+
+  def full?
+    @board.none? {|c| c==" "}
+  end
+
+  def draw?
+    full? && !won?
+  end
+
+  def over?
+    won? || draw?
+  end
+
+  def winner
+    won=won?
+    return @board[won[0]] if won
+  end
+
+  def play
+    turn until over?
+    puts won? ? "Congratulations #{winner}!" : "Cat's Game!"
+  end
 end
