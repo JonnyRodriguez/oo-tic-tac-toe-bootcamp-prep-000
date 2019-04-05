@@ -1,3 +1,7 @@
+class TicTacToe
+  def initialize(board=nil)
+    @board = board if board
+
 WIN_COMBINATIONS = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
 
 def display_board(board)
@@ -8,7 +12,6 @@ def display_board(board)
   puts " #{board[6]} | #{board[7]} | #{board[8]} "
 end
 
-<<<<<<< HEAD
 def input_to_index(input)
   input.to_i-1
 end
@@ -44,24 +47,12 @@ end
 def current_player(board)
   turn_count(board).even? ? "X" : "O"
 end
-=======
-input_to_index(input) = -> { return input.to_i-1 }
-
-#move(board,index,player="X") = -> { board[index]=player }
-
-#position_taken?(board, index) = -> {!(board[index].nil? || board[index] == " ") }
-
-#turn_count(board) = -> { board.count { |content| content=="X" || content=="O" } }
-
-#current_player(board) = -> { turn_count(board).even? ? "X" : "O" }
->>>>>>> 6716fd68c9214410752392316a2c143cefe21450
 
 def won?(board)
   WIN_COMBINATIONS.each do |combination|
     return combination if combination.all? {|i| board[i]=="X"}
     return combination if combination.all? {|i| board[i]=="O"}
   end
-<<<<<<< HEAD
   false
 end
 
@@ -86,15 +77,6 @@ def play(board)
   turn(board) until over?(board)
   puts won?(board) ? "Congratulations #{winner(board)}!" : "Cat's Game!"
 end
-=======
-  FALSE
-end
-
-#full?(board) = -> { board.none? {|c| c==" "} }
-
-#draw?(board) = -> { full?(board) && !won?(board) }
-
-#over?(board) = -> { won?(board) || draw?(board) }
 
 def winner(board)
   won=won?(board)
